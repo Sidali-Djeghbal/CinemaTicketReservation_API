@@ -16,11 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
 from tickets import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('django/no_rest/', views.no_restFramework_method),
+    
+    #1
+    path('django/jsonresponse_no_model/', views.no_rest_no_model),
+    
+    #2
+    path('django/jsonresponse_from_model/', views.no_rest_from_model),
+    
+    #3 : GET, POST from REST function based view @api_view
+    path('django/fbvlist/', views.FBV_list),
 ]
 

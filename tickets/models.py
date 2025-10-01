@@ -7,7 +7,6 @@ class Movie(models.Model):
     movie = models.CharField(max_length=20)
     date = models.DateField()
 
-
 class Guest(models.Model):
     name = models.CharField(max_length=20)
     mobile = models.CharField(max_length=10)

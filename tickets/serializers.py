@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Guest, Ticket
+from .models import Guest, Movie, Reservation
 
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
