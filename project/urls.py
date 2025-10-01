@@ -17,6 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from tickets import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('django/no_rest/', views.no_restFramework_method),
 ]
+
