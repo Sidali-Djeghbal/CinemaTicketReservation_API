@@ -20,14 +20,8 @@ from tickets import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
-    #1
     path('django/jsonresponse_no_model/', views.no_rest_no_model),
-    
-    #2
     path('django/jsonresponse_from_model/', views.no_rest_from_model),
-    
-    #3 : GET, POST from REST function based view @api_view
-    path('django/fbvlist/', views.FBV_list),
+    path('rest/fbvlist/', views.FBV_list),
 ]
 
