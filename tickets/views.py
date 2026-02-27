@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from tickets.models import Guest
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status, filters
+from rest_framework import status, generics, mixins
 from .serializers import GuestSerializer
 from rest_framework.views import APIView
 from django.http import Http404
@@ -105,5 +105,22 @@ class CBV_pk(APIView):
         guest.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
-   
+# mixins and generics method
+class mixins_list(mixins.ListModelMixin, mixins.CreateModelMixin,generics.GenericAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+    def get(self, request):
+        return self.list(request)
+    def post(self, request):
+        return self.create(request)
+    
+class mixins_pk(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+    def get(self, request,pk):
+        return self.retrieve(request)
+    def put(self, request,pk):
+        return self.update(request)
+    def delete(self, request,pk):
+        return self.destroy(request)
+    
