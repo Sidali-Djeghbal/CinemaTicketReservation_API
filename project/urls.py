@@ -24,5 +24,7 @@ urlpatterns = [
     path('django/jsonresponse_from_model/', views.no_rest_from_model),
     path('rest/fbvlist/', views.FBV_list),
     path('rest/fbvpk/<int:pk>', views.FBV_pk),
+    path('rest/cbv/', views.CBV_List.as_view()),
+    path('rest/cbv/<int:pk>', views.CBV_pk.as_view()),
 ]
 
