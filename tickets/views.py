@@ -145,3 +145,14 @@ class viewsets_movie(viewsets.ModelViewSet):
 class viewsets_reservation(viewsets.ModelViewSet):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
+    
+
+@api_view(['GET'])
+def find_movie(request):
+    movies = Movie.objects.filter(
+        movie = request.data['movie'],
+        hall = request.data['hall'],
+    )
+    serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data)
+
