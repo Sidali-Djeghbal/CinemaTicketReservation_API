@@ -156,3 +156,22 @@ def find_movie(request):
     serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data)
 
+@api_view(['POST'])
+def new_reservation(request):
+    movie = Movie.objects.get(
+        movie = request.data['movie'],
+        hall = request.data['hall'],
+    )
+    
+    guest = Guest()
+    guest.name = request.data['name']
+    guest.mobile = request.data['mobile']
+    guest.save()
+    
+    reservation = Reservation()
+    reservation.guest = guest
+    reservation.movie = movie
+    reservation.save()
+    
+    return Response(status=status.HTTP_201_CREATED)
+
