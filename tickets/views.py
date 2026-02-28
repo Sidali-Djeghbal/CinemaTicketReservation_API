@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from tickets.models import Guest, Movie, Reservation
+from tickets.models import Guest, Movie, Reservation, Post
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status, generics, mixins, viewsets, filters
-from .serializers import GuestSerializer, MovieSerializer, ReservationSerializer
+from .serializers import GuestSerializer, MovieSerializer, ReservationSerializer, PostSerializer
 from rest_framework.views import APIView
 from django.http import Http404
+from rest_framework.authentication import BasicAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from .permissions import isAuthorOrReadOnly
 # Create your views here.
 
 # no REST framework method
@@ -128,9 +131,15 @@ class generics_list(generics.ListCreateAPIView):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
     
+    authentication_classes = [TokenAuthentication]
+    #permission_classes = [IsAuthenticated]
+    
 class generic_pk(generics.RetrieveUpdateDestroyAPIView):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
+    
+    #authentication_classes = [BasicAuthentication]
+    #permission_classes = [IsAuthenticated]
     
 class viewsets_guest(viewsets.ModelViewSet):
     queryset = Guest.objects.all()
@@ -175,3 +184,7 @@ def new_reservation(request):
     
     return Response(status=status.HTTP_201_CREATED)
 
+class Post_pk(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [isAuthorOrReadOnly]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
